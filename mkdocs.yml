@@ -1,0 +1,46 @@
+site_name: My Docs
+site_url: https://mydomain.org/mysite
+theme:
+  name: material 
+  palette: 
+
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate 
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+
+plugins:
+  - search
+  - blog
+
+nav:
+  - Home: index.md
+  - Code Docs:
+      - My First File: coding/my-first-file.md
+  - About: 
+      - About me: about/about.md
+      - Selected Publications: about/testing.md
+  - Blog:
+    - All Posts: 
+        - Hello World: blog/posts/Hello-World
