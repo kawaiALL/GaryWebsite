@@ -47,6 +47,6 @@ nav:
   - About: 
       - About me: about/about.md
       - Selected Publications: about/testing.md
-  - Blog:
-    - All Posts: 
-        - Hello World: blog/posts/Hello-World
+#  - Blog:
+#    - All Posts: 
+#        - Hello World: blog/posts/Hello-World.md
