@@ -18,7 +18,7 @@ From a British to a Chinese Colony? Hong Kong before and after the 1997 Handover
 
 ## Journal Articles and Book Chapter
 
-“British Colonial Rule over Littoral Space and Watercraft in Hong Kong, 1841–1898.” The Historical Journal, 2025, 1–23. (First View: https://doi.org/10.1017/S0018246X25100988)
+“British Colonial Rule over Littoral Space and Watercraft in Hong Kong, 1841–1898.” The Historical Journal, 2025, 1–23. [First View](https://doi.org/10.1017/S0018246X25100988)
 
 “The Making of a Littoral Minzu: The Dan in Late Qing–Republican Intellectual Writings.” International Journal of Asian Studies 20 (2023): 1-17.
 
