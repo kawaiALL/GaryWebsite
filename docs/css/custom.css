@@ -1,0 +1,155 @@
+/* 自定義地圖彈出窗口樣式 */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.leaflet-popup-content {
+    font-family: 'Your Font', sans-serif;
+    line-height: 1.6;
+}
+
+.leaflet-popup-content h3 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.leaflet-popup-content img {
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+
+/* 頂部導航欄 - 透明毛玻璃效果 */
+.md-header {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 頁面滾動時加深效果 */
+.md-header[data-md-state="shadow"] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 標籤欄 - 同樣的毛玻璃效果 */
+.md-tabs {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* === 文字顏色 === */
+
+/* 網站標題 */
+.md-header__title {
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+}
+
+/* 導航鏈接 */
+.md-tabs__link {
+    color: #5d6d7e !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+}
+
+/* 導航鏈接懸停 */
+.md-tabs__link:hover {
+    color: #2c3e50 !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 當前選中的導航鏈接 */
+.md-tabs__link--active {
+    color: #2c3e50 !important;
+    border-bottom: 2px solid #2c3e50 !important;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* === 移動端漢堡菜單 === */
+.md-header__button {
+    color: #2c3e50 !important;
+}
+
+/* === 搜索框樣式 === */
+.md-search__input {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    color: #2c3e50 !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.md-search__input::placeholder {
+    color: #7f8c8d !important;
+}
+
+/* === 確保內容區域透明 === */
+.md-main {
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9)) !important;
+}
+
+/* 深色模式支持 - 增強版 */
+/* [data-md-color-scheme="default"] 亮色模式樣式保持不變 */
+
+[data-md-color-scheme="slate"] {
+    /* 深色模式樣式 */
+    .md-header {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .md-main {
+        background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9)) !important;
+    }
+    
+    .md-tabs {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .md-header__title {
+        color: #ecf0f1 !important;
+    }
+    
+    .md-tabs__link {
+        color: #bdc3c7 !important;
+    }
+    
+    .md-tabs__link:hover {
+        color: #ecf0f1 !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .md-tabs__link--active {
+        color: #ecf0f1 !important;
+        border-bottom: 2px solid #ecf0f1 !important;
+        background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+    
+    .md-header__button {
+        color: #ecf0f1 !important;
+    }
+    
+    .md-search__input {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        color: #ecf0f1 !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+}
+
+/* 智能隱藏標籤欄 */
+.md-tabs {
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+}
+
+.md-tabs--hidden {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}

@@ -30,23 +30,28 @@ theme:
     - search.highlight
     - search.share
     - announce.dismiss
+    - content.code.annotate 
+  
 
 extra_javascript:
   - js/custom.js
+  - https://unpkg.com/leaflet@1.9.4/dist/leaflet.js
 extra_css:
   - css/custom.css
+  - https://unpkg.com/leaflet@1.9.4/dist/leaflet.css
 
 plugins:
   - search
   - blog
 
 nav:
-  - Home: index.md
-  - Code Docs:
-      - My First File: coding/my-first-file.md
+  - Map1: index.md
+  - Map2:
+      - Map2: coding/my-first-file.md
+  - Map Test: map3/map3.md    
   - About: 
-      - About me: about/about.md
       - Selected Publications: about/testing.md
+
 #  - Blog:
 #    - All Posts: 
 #        - Hello World: blog/posts/Hello-World.md
