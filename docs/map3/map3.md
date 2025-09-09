@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <h3>Victoria Harbour</h3>
         <p>The harbour has historically been defined by its deep, sheltered waters and strategic location on South China Sea. These factors were also instrumental in Hong Kong's establishment as a British colony in 1841 and its subsequent development as a trading hub.</p>
         <img src="../Tamar.jpg" width="200">
-        <br><small><a href="/about/victoria-harbor.md">閱讀更多</a></small>
+        <br><small><a href="/mysite/map3/more/">閱讀更多</a></small>
     `);
     
     
@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     marker4.bindPopup(`
         <h3>Fung King-Hey Building</h3>
         <p>Department of History, The Chinese University of Hong Kong.</p>
+        <a href="https://www.history.cuhk.edu.hk/" target="_blank">More information</a>
     `);
     
     // 6. 自動打開第一個標記的彈窗
