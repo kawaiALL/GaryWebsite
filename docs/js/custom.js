@@ -1,44 +1,47 @@
-
-
-// 智能隱藏標籤欄 - 使用這個版本
+// 合併後的智能隱藏和條件側邊欄功能
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 初始化頁面功能');
+    
+    // === 智能隱藏標籤欄 ===
     const mdTabs = document.querySelector('.md-tabs');
-    const mdHeader = document.querySelector('.md-header');
-    let scrollTimeout;
-    
-    if (!mdTabs) return;
-    
-    function hideTabs() {
-        mdTabs.classList.add('md-tabs--hidden');
-    }
-    
-    function showTabs() {
-        mdTabs.classList.remove('md-tabs--hidden');
-    }
-    
-    // 滾動事件
-    window.addEventListener('scroll', function() {
-        clearTimeout(scrollTimeout);
+    if (mdTabs) {
+        let isHidden = false;
+        let scrollTimeout;
         
-        if (window.scrollY > 100) {
-            hideTabs();
-        } else {
-            showTabs();
+        function hideTabs() {
+            if (!isHidden) {
+                mdTabs.classList.add('md-tabs--hidden');
+                isHidden = true;
+            }
         }
         
-        // 滾動停止後顯示
-        scrollTimeout = setTimeout(showTabs, 1500);
-    });
-    
-    // 鼠標懸停顯示
-    mdHeader.addEventListener('mouseenter', showTabs);
-    mdTabs.addEventListener('mouseenter', showTabs);
-    
-    // 鼠標離開後延遲隱藏
-    mdTabs.addEventListener('mouseleave', function() {
-        if (window.scrollY > 100) {
-            setTimeout(hideTabs, 1000);
+        function showTabs() {
+            if (isHidden) {
+                mdTabs.classList.remove('md-tabs--hidden');
+                isHidden = false;
+            }
         }
-    });
+        
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollTimeout);
+            if (window.scrollY > 200) hideTabs();
+            else showTabs();
+            scrollTimeout = setTimeout(showTabs, 800);
+        });
+        
+        mdTabs.addEventListener('mouseenter', showTabs);
+    }
     
+    // === 條件性顯示導覽欄 ===
+    const showSidebarPages = ['/about/', '/about/about/', '/about/testing/'];
+    const currentPath = window.location.pathname;
+    const shouldShowSidebar = showSidebarPages.some(path => currentPath.includes(path));
+    
+    if (shouldShowSidebar) {
+        document.documentElement.classList.add('show-sidebar');
+        console.log('✅ 導覽欄已顯示');
+    } else {
+        document.documentElement.classList.remove('show-sidebar');
+        console.log('🚫 導覽欄已隱藏');
+    }
 });

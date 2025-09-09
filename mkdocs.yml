@@ -17,7 +17,7 @@ theme:
         name: Switch to light mode
 
   features:
-    - navigation.instant
+    - navigation.instant: false
     - navigation.instant.progress
     - navigation.tracking
     - navigation.tabs
@@ -31,6 +31,7 @@ theme:
     - search.share
     - announce.dismiss
     - content.code.annotate 
+ 
   
 
 extra_javascript:

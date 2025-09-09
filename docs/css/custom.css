@@ -143,13 +143,147 @@
     }
 }
 
-/* 智能隱藏標籤欄 */
+/* 智能隱藏標籤欄 - 修正版 */
 .md-tabs {
-    transition: transform 0.3s ease, opacity 0.3s ease !important;
+    transition: all 0.3s ease !important;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
 }
 
 .md-tabs--hidden {
     transform: translateY(-100%) !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    /* 確保完全隱藏，不佔用空間 */
+    height: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 修復地圖重疊問題 */
+#my-custom-map {
+    margin-top: 20px !important; /* 添加頂部間距 */
+    transition: margin-top 0.3s ease !important; /* 平滑過渡 */
+}
+
+/* 當標籤欄隱藏時，調整地圖位置 */
+.md-tabs--hidden ~ .md-main .md-content #my-custom-map {
+    margin-top: 0 !important; /* 減少頂部間距 */
+}
+
+/* 確保地圖容器正確佈局 */
+.md-main__inner {
+    position: relative;
+    overflow: visible;
+}
+
+/* 為地圖創建專用的佈局容器 */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 500px; /* 根據需要調整 */
+    margin: 20px 0;
+    z-index: 10; /* 確保在地圖層級正確 */
+}
+
+/* 完全隱藏左側主導覽欄 */
+.md-sidebar--primary {
+    display: none !important;
+}
+
+/* 隱藏右側目錄導覽欄（可選） */
+.md-sidebar--secondary {
+    display: none !important;
+}
+
+/* 默認狀態：隱藏側邊欄 */
+.md-sidebar--primary,
+.md-sidebar--secondary {
+    display: none !important;
+}
+
+.md-main__inner {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+}
+
+/* 顯示側邊欄時的狀態 */
+.show-sidebar .md-sidebar--primary,
+.show-sidebar .md-sidebar--secondary {
+    display: block !important;
+}
+
+.show-sidebar .md-main__inner {
+    margin-left: 1.2rem !important;
+    max-width: calc(100% - 12rem) !important;
+}
+
+.show-sidebar .md-content {
+    margin-left: 0.8rem !important;
+}
+
+/* 確保內容正確佈局 */
+.md-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.md-content {
+    padding: 1rem;
+}
+
+/* 如果需要的話，也可以調整頂部導航欄 */
+.md-header {
+    position: relative !important;
+}
+
+/* 添加一個切換按鈕 */
+.sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* 當導覽欄隱藏時調整內容 */
+.sidebar-hidden .md-sidebar--primary,
+.sidebar-hidden .md-sidebar--secondary {
+    display: none !important;
+}
+
+.sidebar-hidden .md-main__inner {
+    margin-left: 0 !important;
+}
+
+/* 當有 .show-sidebar 類時顯示導覽欄 */
+.show-sidebar .md-sidebar--primary {
+    display: block !important;
+}
+
+.show-sidebar .md-sidebar--secondary {
+    display: block !important; /* 如果需要也顯示右側欄 */
+}
+
+.show-sidebar .md-main__inner {
+    margin-left: 1.2rem !important;
+    max-width: calc(100% - 12rem) !important;
+}
+
+.show-sidebar .md-content {
+    margin-left: 0.8rem !important;
+    max-width: calc(100% - 13rem) !important;
+}
+
+/* 確保 about 頁面的正常佈局 */
+.show-sidebar .md-grid {
+    max-width: 60rem !important;
+    margin: 0 auto !important;
 }

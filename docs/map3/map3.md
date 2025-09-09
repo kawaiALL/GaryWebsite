@@ -1,4 +1,6 @@
-<div id="my-custom-map" style="height: 700px; width: 100%; border: 1px solid #ccc; border-radius: 8px;"></div>
+<div class="map-container">
+    <div id="my-custom-map" style="height: 100%; width: 100%;"></div>
+</div>
 
 <script>
 
@@ -17,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     marker1.bindPopup(`
         <h3>Victoria Harbour</h3>
         <p>The harbour has historically been defined by its deep, sheltered waters and strategic location on South China Sea. These factors were also instrumental in Hong Kong's establishment as a British colony in 1841 and its subsequent development as a trading hub.</p>
-        <img src="images\HMS_Tamar.jpg" width="200">
+        <img src="../Tamar.jpg" width="200">
         <br><small><a href="/about/victoria-harbor.md">閱讀更多</a></small>
     `);
     
