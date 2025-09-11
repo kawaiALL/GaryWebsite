@@ -1,0 +1,317 @@
+/* 自定義地圖彈出窗口樣式 */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.leaflet-popup-content {
+    font-family: 'Your Font', sans-serif;
+    line-height: 1.6;
+}
+
+.leaflet-popup-content h3 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.leaflet-popup-content img {
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+
+/* 頂部導航欄 - 透明毛玻璃效果 */
+.md-header {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* 頁面滾動時加深效果 */
+.md-header[data-md-state="shadow"] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 標籤欄 - 同樣的毛玻璃效果 */
+.md-tabs {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* === 文字顏色 === */
+
+/* 網站標題 */
+.md-header__title {
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+}
+
+/* 導航鏈接 */
+.md-tabs__link {
+    color: #5d6d7e !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+}
+
+/* 導航鏈接懸停 */
+.md-tabs__link:hover {
+    color: #2c3e50 !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 當前選中的導航鏈接 */
+.md-tabs__link--active {
+    color: #2c3e50 !important;
+    border-bottom: 2px solid #2c3e50 !important;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* === 移動端漢堡菜單 === */
+.md-header__button {
+    color: #2c3e50 !important;
+}
+
+/* === 搜索框樣式 === */
+.md-search__input {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    color: #2c3e50 !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.md-search__input::placeholder {
+    color: #7f8c8d !important;
+}
+
+/* === 確保內容區域透明 === */
+.md-main {
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9)) !important;
+}
+
+/* 深色模式支持 - 增強版 */
+/* [data-md-color-scheme="default"] 亮色模式樣式保持不變 */
+
+[data-md-color-scheme="slate"] {
+    /* 深色模式樣式 */
+    .md-header {
+        background-color: rgba(0, 0, 0, 0.8) !important;
+        backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .md-main {
+        background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.9)) !important;
+    }
+    
+    .md-tabs {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .md-header__title {
+        color: #ecf0f1 !important;
+    }
+    
+    .md-tabs__link {
+        color: #bdc3c7 !important;
+    }
+    
+    .md-tabs__link:hover {
+        color: #ecf0f1 !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .md-tabs__link--active {
+        color: #ecf0f1 !important;
+        border-bottom: 2px solid #ecf0f1 !important;
+        background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+    
+    .md-header__button {
+        color: #ecf0f1 !important;
+    }
+    
+    .md-search__input {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        color: #ecf0f1 !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+}
+
+/* 智能隱藏標籤欄 - 修正版 */
+.md-tabs {
+    transition: all 0.3s ease !important;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.md-tabs--hidden {
+    transform: translateY(-100%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    /* 確保完全隱藏，不佔用空間 */
+    height: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 修復地圖重疊問題 */
+#my-custom-map {
+    margin-top: 20px !important; /* 添加頂部間距 */
+    transition: margin-top 0.3s ease !important; /* 平滑過渡 */
+}
+
+/* 當標籤欄隱藏時，調整地圖位置 */
+.md-tabs--hidden ~ .md-main .md-content #my-custom-map {
+    margin-top: 0 !important; /* 減少頂部間距 */
+}
+
+/* 確保地圖容器正確佈局 */
+.md-main__inner {
+    position: relative;
+    overflow: visible;
+}
+
+/* 為地圖創建專用的佈局容器 */
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 500px; /* 根據需要調整 */
+    margin: 20px 0;
+    z-index: 10; /* 確保在地圖層級正確 */
+}
+
+/* 完全隱藏左側主導覽欄 */
+.md-sidebar--primary {
+    display: none !important;
+}
+
+/* 隱藏右側目錄導覽欄（可選） */
+.md-sidebar--secondary {
+    display: none !important;
+}
+
+/* 默認狀態：隱藏側邊欄 */
+.md-sidebar--primary,
+.md-sidebar--secondary {
+    display: none !important;
+}
+
+.md-main__inner {
+    margin-left: 0 !important;
+    max-width: 100% !important;
+}
+
+/* 顯示側邊欄時的狀態 */
+.show-sidebar .md-sidebar--primary,
+.show-sidebar .md-sidebar--secondary {
+    display: block !important;
+}
+
+.show-sidebar .md-main__inner {
+    margin-left: 1.2rem !important;
+    max-width: calc(100% - 12rem) !important;
+}
+
+.show-sidebar .md-content {
+    margin-left: 0.8rem !important;
+}
+
+/* 確保內容正確佈局 */
+.md-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.md-content {
+    padding: 1rem;
+}
+
+/* 如果需要的話，也可以調整頂部導航欄 */
+.md-header {
+    position: relative !important;
+}
+
+/* 添加一個切換按鈕 */
+.sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* 當導覽欄隱藏時調整內容 */
+.sidebar-hidden .md-sidebar--primary,
+.sidebar-hidden .md-sidebar--secondary {
+    display: none !important;
+}
+
+.sidebar-hidden .md-main__inner {
+    margin-left: 0 !important;
+}
+
+/* 當有 .show-sidebar 類時顯示導覽欄 */
+.show-sidebar .md-sidebar--primary {
+    display: block !important;
+}
+
+.show-sidebar .md-sidebar--secondary {
+    display: block !important; /* 如果需要也顯示右側欄 */
+}
+
+.show-sidebar .md-main__inner {
+    margin-left: 1.2rem !important;
+    max-width: calc(100% - 12rem) !important;
+}
+
+.show-sidebar .md-content {
+    margin-left: 0.8rem !important;
+    max-width: calc(100% - 13rem) !important;
+}
+
+/* 確保 about 頁面的正常佈局 */
+.show-sidebar .md-grid {
+    max-width: 60rem !important;
+    margin: 0 auto !important;
+}
+
+.md-main {
+    flex: 1;
+}
+
+.md-content {
+    min-height: 800px; /* 確保內容區域有最小高度 */
+}
+
+.map-container {
+    min-height: 700px;
+    width: 100%;
+}
+
+#my-custom-map {
+    height: 100%;
+    width: 100%;
+}
+
+.historical-marker {
+    background: transparent !important;
+    border: none !important;
+}
+
+.modern-marker {
+    background: transparent !important;
+    border: none !important;
+}
