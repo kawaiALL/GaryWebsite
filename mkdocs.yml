@@ -17,7 +17,6 @@ theme:
         name: Switch to light mode
 
   features:
-    - navigation.instant: false
     - navigation.instant.progress
     - navigation.tracking
     - navigation.tabs
@@ -46,10 +45,7 @@ plugins:
   - blog
 
 nav:
-  - Map1: index.md
-  - Map2:
-      - Map2: coding/my-first-file.md
-  - Map Test: map3/map3.md    
+  - The Map: index.md   
   - About: 
       - Selected Publications: about/testing.md
 

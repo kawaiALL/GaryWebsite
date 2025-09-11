@@ -1,21 +1,24 @@
 <div class="map-container">
-    <div id="my-custom-map" style="height: 100%; width: 100%;"></div>
+    <div id="my-custom-map" style="height: 700px; width: 100%;"></div>
 </div>
 
 <script>
-
 document.addEventListener('DOMContentLoaded', function() {
-    
-   
-    var map = L.map('my-custom-map').setView([22.4193, 114.2034], 13);
-    
+    // 初始化地圖
+    var map = L.map('my-custom-map').setView([22.3193, 114.1694], 10);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
+        // 移除 opacity: 0.5 這行，恢復完全不透明
     }).addTo(map);
     
+    // 添加你的自定義歷史地圖
+    L.imageOverlay('../HIST-HA26-1957.jpg', 
+        [[22.15, 113.8], [22.55, 114.4]]
+    ).addTo(map);
     
-    var marker1 = L.marker([22.2933, 114.1699]).addTo(map);
+    
+    //var marker1 = L.marker([22.2933, 114.1699]).addTo(map);
     marker1.bindPopup(`
         <h3>Victoria Harbour</h3>
         <p>The harbour has historically been defined by its deep, sheltered waters and strategic location on South China Sea. These factors were also instrumental in Hong Kong's establishment as a British colony in 1841 and its subsequent development as a trading hub.</p>
@@ -49,6 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
     `);
     
     // 6. 自動打開第一個標記的彈窗
-    marker4.openPopup();
+    //marker4.openPopup();
 });
 </script>
+
+
+
+

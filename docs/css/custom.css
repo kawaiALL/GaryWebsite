@@ -287,3 +287,31 @@
     max-width: 60rem !important;
     margin: 0 auto !important;
 }
+
+.md-main {
+    flex: 1;
+}
+
+.md-content {
+    min-height: 800px; /* 確保內容區域有最小高度 */
+}
+
+.map-container {
+    min-height: 700px;
+    width: 100%;
+}
+
+#my-custom-map {
+    height: 100%;
+    width: 100%;
+}
+
+.historical-marker {
+    background: transparent !important;
+    border: none !important;
+}
+
+.modern-marker {
+    background: transparent !important;
+    border: none !important;
+}
