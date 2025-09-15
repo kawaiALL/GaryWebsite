@@ -104,3 +104,28 @@ function calculateTransformation() {
     console.log('📐 計算轉換參數:', pairs);
     // 這裡可以實現坐標轉換算法
 }
+
+function addVisitCounter() {
+    const counterHtml = `
+        <div class="visit-counter">
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=kawaiALL.GaryWebsite
+          &left_color=%23A7D4FA
+          &right_color=%231B7CCF
+          &left_text_color=%23000000"> 
+        </div>
+    `;
+    
+    // 嘗試添加到導航欄內部
+    const headerInner = document.querySelector('.md-header__inner');
+    if (headerInner) {
+        headerInner.insertAdjacentHTML('beforeend', counterHtml);
+        console.log('✅ 訪問計數器已添加到導航欄');
+    } else {
+        console.log('❌ 未找到導航欄容器');
+    }
+}
+
+// 頁面加載後執行
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(addVisitCounter, 100); // 稍延遲確保 DOM 加載完成
+});

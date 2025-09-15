@@ -315,3 +315,33 @@
     background: transparent !important;
     border: none !important;
 }
+
+.visit-counter {
+    margin-left: auto !important;  /* 推到最右側 */
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.visit-counter img {
+    height: 22px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.visit-counter img:hover {
+    transform: scale(1.05);
+}
+
+/* 確保導航欄可以容納 */
+.md-header__inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.md-header__title {
+    flex: 1;
+}
