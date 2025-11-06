@@ -345,3 +345,49 @@
 .md-header__title {
     flex: 1;
 }
+
+
+/* 寬版響應式彈出窗口 */
+/* 調整彈出窗口內容寬度 */
+.leaflet-popup-content-wrapper {
+    max-height: 70vh !important;
+    width: auto !important;
+    min-width: 500px !important;     /* 你設定的寬度 */
+    max-width: 700px !important;
+    overflow-y: auto !important;
+    border-radius: 12px !important;
+}
+
+.leaflet-popup-content {
+    max-height: calc(70vh - 50px) !important;
+    width: 100% !important;          /* 確保內容佔滿寬度 */
+    max-width: none !important;      /* 移除最大寬度限制 */
+    padding: 25px !important;        /* 增加內邊距 */
+    margin: 10px 0 !important;       /* 移除左右外邊距 */
+    line-height: 1.8 !important;
+    font-size: 15px !important;
+    text-align: left !important;
+    box-sizing: border-box !important; /* 包含內邊距在寬度內 */
+}
+
+/* 確保內容充分利用空間 */
+.leaflet-popup-content p {
+    text-indent: 2em !important;
+    margin-bottom: 1.2em !important;
+    width: 100% !important;
+    padding-bottom: 2em !important; /* 內容區域底部內邊距 */
+}
+
+.leaflet-popup-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.leaflet-popup-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.leaflet-popup-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
