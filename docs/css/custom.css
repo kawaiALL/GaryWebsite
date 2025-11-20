@@ -180,13 +180,29 @@
     overflow: visible;
 }
 
-/* 為地圖創建專用的佈局容器 */
-.map-container {
+.mapwarper-style-container {
     position: relative;
     width: 100%;
-    height: 500px; /* 根據需要調整 */
-    margin: 20px 0;
-    z-index: 10; /* 確保在地圖層級正確 */
+    height: 100vh;  /* 改为全屏高度 */
+    background: #f8f9fa;
+    border: none;   /* 移除边框 */
+    border-radius: 0; /* 移除圆角 */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.map-container {
+    width: 100%;
+    height: calc(100vh - 49px); /* 全屏减去工具栏 */
+    background: #e9ecef;
+}
+
+/* 确保没有其他元素限制地图 */
+.md-main, .md-main__inner, .md-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
 }
 
 /* 完全隱藏左側主導覽欄 */
@@ -391,3 +407,4 @@
 .leaflet-popup-content::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
+

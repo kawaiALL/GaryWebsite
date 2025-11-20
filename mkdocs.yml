@@ -1,4 +1,4 @@
-site_name: My Docs
+site_name: Historical Hong Kong:Maritime Lens
 site_url: https://mydomain.org/mysite
 theme:
   name: material 
@@ -45,7 +45,7 @@ plugins:
   - blog
 
 nav:
-  - The Map: index.md   
+  - Map: index.md   
   - About: 
       - Selected Publications: about/testing.md
 

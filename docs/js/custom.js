@@ -129,3 +129,11 @@ function addVisitCounter() {
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(addVisitCounter, 100); // 稍延遲確保 DOM 加載完成
 });
+
+historicalLayer = L.tileLayer('https://mapwarper.net/maps/tile/99136/{z}/{x}/{y}.png', {
+    attribution: 'Historical Map © Map Warper',
+    maxZoom: 18,
+    minZoom: 10,
+    opacity: 1.0
+}).addTo(map);
+
