@@ -327,10 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <p>殖民時期起，兩島一直處於開發程度較低的狀況，殖民政府亦未對其進行商業開發。如今兩島均無固定居民，保持原始自然地貌，龍鼓洲、沙洲因豐富考古遺存成為學術研究熱點，附近的海洋生態亦同樣備受矚目，成為兼具生態價值與歷史回憶的重要地標。</p>
 
-    <div class="location-tags">
-        <span class="location-tag">📍 地點A</span>
-        <span class="location-tag">📍 地點B</span>
-    </div>
 `;
 
     var marker4 = L.marker([22.376165165479804, 113.8832624680332], {
