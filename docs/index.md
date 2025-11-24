@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <style>
 /* 强制全屏重置 */
 main .md-main__inner {
@@ -23,7 +26,6 @@ main .md-content {
 }
 </style>
 
-<!-- 模仿 Map Warper 的地圖查看器 -->
 <div class="mapwarper-style-container">
     <!-- 工具欄 -->
     <div class="map-toolbar">
@@ -38,31 +40,38 @@ main .md-content {
         </div>
     </div>
     
-    <!-- 地圖容器 -->
-    <div id="mapwarper-style-map" class="map-container"></div>
+<!-- 地圖容器 -->
+<div id="mapwarper-style-map" class="map-container"></div>
     
-    <!-- 圖層控制面板 -->
-    <div class="layer-control">
-        <div class="control-header">
-            <h4>Layers</h4>
-        </div>
-        <div class="control-content">
-            <label class="layer-item">
-                <input type="checkbox" id="historical-layer" checked onchange="toggleHistoricalLayer()">
-                <span>Historical Map (1957)</span>
-            </label>
-            <label class="layer-item">
-                <input type="checkbox" id="modern-layer" onchange="toggleModernLayer()">
-                <span>Modern Map </span>
-            </label>
-            <div class="opacity-control">
-                <label>Transparency</label>
-                <input type="range" id="opacity-slider" min="0" max="100" value="100" oninput="changeOpacity(this.value)">
-                <span id="opacity-value">100%</span>
-            </div>
+<!-- 圖層控制面板 -->
+<div class="layer-control" id="layerControl">
+    <div class="control-header">
+        <h4>Layers</h4>
+        <button class="close-btn" onclick="toggleLayerControl()" title="Hide panel">×</button>
+    </div>
+    <div class="control-content">
+        <label class="layer-item">
+            <input type="checkbox" id="historical-layer" checked onchange="toggleHistoricalLayer()">
+            <span>Historical Map (1957)</span>
+        </label>
+        <label class="layer-item">
+            <input type="checkbox" id="modern-layer" onchange="toggleModernLayer()">
+            <span>Modern Map</span>
+        </label>
+        <div class="opacity-control">
+            <label>Transparency</label>
+            <input type="range" id="opacity-slider" min="0" max="100" value="100" oninput="changeOpacity(this.value)">
+            <span id="opacity-value">100%</span>
         </div>
     </div>
 </div>
+
+<!-- 添加显示按钮 -->
+<button class="show-layers-btn" id="showLayersBtn" onclick="toggleLayerControl()" title="Show layers">
+    <span>🗂️Layers</span>
+</button>
+
+
 
 <style>
 /* Map Warper 風格容器 */

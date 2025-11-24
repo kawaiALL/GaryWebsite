@@ -130,10 +130,56 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(addVisitCounter, 100); // 稍延遲確保 DOM 加載完成
 });
 
-historicalLayer = L.tileLayer('https://mapwarper.net/maps/tile/99136/{z}/{x}/{y}.png', {
-    attribution: 'Historical Map © Map Warper',
-    maxZoom: 18,
-    minZoom: 10,
-    opacity: 1.0
-}).addTo(map);
 
+// 图层控制显示/隐藏 - 简化版本
+function toggleLayerControl() {
+    const layerControl = document.getElementById('layerControl');
+    const showBtn = document.getElementById('showLayersBtn');
+    
+    console.log('切换图层控制状态');
+    
+    // 切换hidden类
+    layerControl.classList.toggle('hidden');
+    // 切换visible类
+    showBtn.classList.toggle('visible');
+}
+
+// 初始化设置
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('初始化图层控制');
+    
+    const layerControl = document.getElementById('layerControl');
+    const showBtn = document.getElementById('showLayersBtn');
+    
+    // 确保初始状态正确
+    if (layerControl) {
+        layerControl.classList.remove('hidden'); // 显示图层控制
+    }
+    if (showBtn) {
+        showBtn.classList.remove('visible'); // 隐藏显示按钮
+    }
+});
+
+// 图层控制功能
+function toggleHistoricalLayer() {
+    var checkbox = document.getElementById('historical-layer');
+    if (checkbox.checked) {
+        map.addLayer(historicalLayer);
+    } else {
+        map.removeLayer(historicalLayer);
+    }
+}
+
+function toggleModernLayer() {
+    var checkbox = document.getElementById('modern-layer');
+    if (checkbox.checked) {
+        map.addLayer(modernLayer);
+    } else {
+        map.removeLayer(modernLayer);
+    }
+}
+
+function changeOpacity(value) {
+    historicalLayer.setOpacity(value / 100);
+    document.getElementById('opacity-value').textContent = value + '%';
+}
