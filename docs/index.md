@@ -1,3 +1,15 @@
+<!-- PWA配置 -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3F07E8">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 

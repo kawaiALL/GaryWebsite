@@ -1,0 +1,28 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Historical Hong Kong: Maritime Lens",
+  "orientation": "any",
+  "scope": "/GaryWebsite/",
+  "short_name": "HK History Map",
+  "start_url": "/GaryWebsite/",
+  "theme_color": "#3F07E8",
+  "icons": [
+    {
+      "src": "/GaryWebsite/assets/images/favicon.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/GaryWebsite/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/GaryWebsite/images/icon-512.png",
+      "sizes": "512x512", 
+      "type": "image/png"
+    }
+  ]
+}
