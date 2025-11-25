@@ -558,28 +558,31 @@
   }
 }
 
-.md-nav {
-  z-index: 1001 !important; /* 比地图更高 */
+/* 从低到高的z-index层级 */
+#mapwarper-style-map, .map-container {
+    z-index: 1 !important;          /* 最低：地图 */
 }
 
-.md-nav__overlay {
-  z-index: 1000 !important;
-}
-
-/* 确保地图不会覆盖导航 */
-#mapwarper-style-map {
-  z-index: 1 !important;
-}
-
-.map-container {
-  z-index: 1 !important;
-}
-
-/* 工具栏和图层控制保持较高层级 */
-.map-toolbar {
-  z-index: 800 !important;
+.show-layers-btn {
+    z-index: 798 !important;        /* 显示按钮 */
 }
 
 .layer-control {
-  z-index: 801 !important;
+    z-index: 799 !important;        /* 图层控制 */
+}
+
+.map-toolbar {
+    z-index: 800 !important;        /* 地图工具栏 */
+}
+
+.md-nav__overlay {
+    z-index: 1000 !important;       /* 导航遮罩 */
+}
+
+.md-nav {
+    z-index: 1001 !important;       /* 导航菜单 */
+}
+
+.md-header {
+    z-index: 1002 !important;       /* 顶部导航栏 */
 }
