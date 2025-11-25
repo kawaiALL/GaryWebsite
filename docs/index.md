@@ -1,6 +1,6 @@
 <!-- PWA配置 - 使用完整URL -->
 <link rel="manifest" href="https://kawaiall.github.io/GaryWebsite/manifest.json">
-<meta name="theme-color" content="#3F07E8">
+<meta name="theme-color" content="#bfcbfaff">
 
 <!-- Favicon -->
 <link rel="icon" href="https://kawaiall.github.io/GaryWebsite/images/favicon.png">

@@ -413,25 +413,33 @@
     display: none !important;
 }
 
-.md-header__topic:first-child {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+.md-header__ellipsis {
+    position: relative;
 }
 
-/* 确保固定标题始终显示 */
-.md-header__title::before {
+.md-header__ellipsis span {
+    opacity: 0; /* 隐藏原始文字但不破坏布局 */
+}
+
+.md-header__ellipsis::after {
     content: "Historical Hong Kong: Maritime Lens";
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     font-size: 1.2rem;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
-/* 隐藏原始标题文本但不破坏布局 */
-.md-header__ellipsis {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .md-header__ellipsis::after {
+        font-size: 1rem;
+        max-width: 180px;
+    }
 }
 
 /* Layers控制面板关闭按钮相关样式 */
