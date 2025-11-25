@@ -2,6 +2,8 @@ site_name: Historical Hong Kong:Maritime Lens
 site_url: https://mydomain.org/mysite
 theme:
   name: material 
+  logo: images/favicon.png
+  favicon: images/favicon.png
   palette: 
 
     # Palette toggle for light mode
@@ -30,6 +32,7 @@ theme:
     - search.share
     - announce.dismiss
     - content.code.annotate 
+    - header.autohide
  
   
 

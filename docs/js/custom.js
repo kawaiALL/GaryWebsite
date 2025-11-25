@@ -2,35 +2,35 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🔍 初始化頁面功能');
     
     // === 智能隱藏標籤欄 ===
-    const mdTabs = document.querySelector('.md-tabs');
-    if (mdTabs) {
-        let isHidden = false;
-        let scrollTimeout;
+    // const mdTabs = document.querySelector('.md-tabs');
+    // if (mdTabs) {
+        //let isHidden = false;
+        //let scrollTimeout;
         
-        function hideTabs() {
-            if (!isHidden) {
-                mdTabs.classList.add('md-tabs--hidden');
-                isHidden = true;
-            }
-        }
+       // function hideTabs() {
+            //if (!isHidden) {
+                //mdTabs.classList.add('md-tabs--hidden');
+                //isHidden = true;
+            //}
+       // }
         
-        function showTabs() {
-            if (isHidden) {
-                mdTabs.classList.remove('md-tabs--hidden');
-                isHidden = false;
-            }
-        }
+        //function showTabs() {
+            //if (isHidden) {
+                //mdTabs.classList.remove('md-tabs--hidden');
+                //isHidden = false;
+            //}
+        //}
         
-        window.addEventListener('scroll', function() {
-            clearTimeout(scrollTimeout);
-            if (window.scrollY > 200) hideTabs();
-            else showTabs();
-            scrollTimeout = setTimeout(showTabs, 800);
-        });
+        //window.addEventListener('scroll', function() {
+            //clearTimeout(scrollTimeout);
+            //if (window.scrollY > 200) hideTabs();
+            //else showTabs();
+            //scrollTimeout = setTimeout(showTabs, 800);
+        //});
         
-        mdTabs.addEventListener('mouseenter', showTabs);
-    }
-    
+        //mdTabs.addEventListener('mouseenter', showTabs);
+    //}
+
     // === 條件性顯示導覽欄 ===
     const showSidebarPages = ['/about/', '/about/about/', '/about/testing/'];
     const currentPath = window.location.pathname;

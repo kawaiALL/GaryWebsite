@@ -537,3 +537,49 @@
     background-repeat: no-repeat;
     margin-right: 8px;
 }
+
+@media (max-width: 768px) {
+  .md-header__inner {
+    position: relative;
+    min-height: 48px;
+  }
+  
+  .md-header__ellipsis::after {
+    font-size: 0.9rem !important;
+    max-width: 120px !important; /* 进一步缩小标题 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* 确保搜索和主题按钮有空间 */
+  .md-header__option {
+    flex-shrink: 0;
+  }
+}
+
+.md-nav {
+  z-index: 1001 !important; /* 比地图更高 */
+}
+
+.md-nav__overlay {
+  z-index: 1000 !important;
+}
+
+/* 确保地图不会覆盖导航 */
+#mapwarper-style-map {
+  z-index: 1 !important;
+}
+
+.map-container {
+  z-index: 1 !important;
+}
+
+/* 工具栏和图层控制保持较高层级 */
+.map-toolbar {
+  z-index: 800 !important;
+}
+
+.layer-control {
+  z-index: 801 !important;
+}
