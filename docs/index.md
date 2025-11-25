@@ -1,12 +1,29 @@
-<link rel="manifest" href="/GaryWebsite/manifest.json">
+<!-- PWA配置 - 使用完整URL -->
+<link rel="manifest" href="https://kawaiall.github.io/GaryWebsite/manifest.json">
 <meta name="theme-color" content="#3F07E8">
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="/GaryWebsite/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/GaryWebsite/images/favicon-16x16.png" sizes="16x16">
+<link rel="icon" href="https://kawaiall.github.io/GaryWebsite/images/favicon.png">
 
-<!-- Apple Touch Icon -->
-<link rel="apple-touch-icon" sizes="180x180" href="/GaryWebsite/images/apple-touch-icon.png">
+<!-- 确保MkDocs不干扰 -->
+<script>
+// 强制设置manifest
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 初始化PWA...');
+    
+    // 移除可能存在的旧manifest链接
+    const oldManifest = document.querySelector('link[rel="manifest"]');
+    if (oldManifest) oldManifest.remove();
+    
+    // 创建新的manifest链接
+    const manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    manifestLink.href = 'https://kawaiall.github.io/GaryWebsite/manifest.json';
+    document.head.appendChild(manifestLink);
+    
+    console.log('✅ Manifest已设置');
+});
+</script>
 
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
