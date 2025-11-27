@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://mydomain.org/mysite/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/index-backup/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/about/testing/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/blog/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/coding/my-first-file/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/map3/map3-backup/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/map3/map3/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/map3/more/</loc>
+         <lastmod>2025-11-27</lastmod>
+    </url>
+</urlset>
