@@ -599,22 +599,9 @@
     z-index: 1004 !important;
 }
 
-/* 移动端特定修复 */
 @media (max-width: 768px) {
-    .md-nav {
-        z-index: 1003 !important;
-    }
-    
-    .md-nav__overlay {
-        z-index: 1002 !important;
-    }
-    
-    /* 在移动端降低图层控制的层级，确保导航菜单可操作 */
-    .layer-control {
-        z-index: 700 !important;
-    }
-    
+    .layer-control,
     .show-layers-btn {
-        z-index: 701 !important;
+        display: none !important;
     }
 }
