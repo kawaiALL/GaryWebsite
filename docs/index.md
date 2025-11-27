@@ -122,7 +122,6 @@ main .md-content {
     background: #fff;
     border-bottom: 1px solid #dee2e6;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    z-index: 1000;
 }
 
 .toolbar-left, .toolbar-right {
@@ -180,7 +179,6 @@ main .md-content {
     border: 1px solid #dee2e6;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 800;
 }
 
 .control-header {

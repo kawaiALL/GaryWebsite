@@ -261,7 +261,7 @@
     position: fixed;
     top: 1rem;
     left: 1rem;
-    z-index: 1000;
+    z-index: 1003;
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -452,7 +452,6 @@
     border: 1px solid #dee2e6;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 800;
     transition: transform 0.3s ease, opacity 0.3s ease;
     display: block; /* 明确设置默认显示 */
 }
@@ -511,7 +510,6 @@
     cursor: pointer;
     font-size: 14px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    z-index: 799;
     transition: all 0.3s ease;
     display: none; /* 默认隐藏 */
 }
@@ -558,31 +556,65 @@
   }
 }
 
-/* 从低到高的z-index层级 */
-#mapwarper-style-map, .map-container {
-    z-index: 1 !important;          /* 最低：地图 */
-}
-
-.show-layers-btn {
-    z-index: 798 !important;        /* 显示按钮 */
-}
-
-.layer-control {
-    z-index: 799 !important;        /* 图层控制 */
-}
-
-.map-toolbar {
-    z-index: 800 !important;        /* 地图工具栏 */
+/* === 修复移动端导航菜单被遮挡问题 === */
+/* 修复移动端导航菜单被遮挡的问题 */
+.md-nav {
+    z-index: 1003 !important; /* 提高导航菜单的层级 */
 }
 
 .md-nav__overlay {
-    z-index: 1000 !important;       /* 导航遮罩 */
+    z-index: 1002 !important; /* 提高导航遮罩的层级 */
 }
 
-.md-nav {
-    z-index: 1001 !important;       /* 导航菜单 */
+/* 图层控制面板层级调整 */
+.layer-control {
+    z-index: 800 !important; /* 保持在地图之上，但在导航之下 */
+}
+
+.show-layers-btn {
+    z-index: 801 !important; /* 显示按钮在图层控制之上 */
+}
+
+/* 确保地图相关元素在正确层级 */
+#mapwarper-style-map, .map-container {
+    z-index: 1 !important;
+}
+
+.map-toolbar {
+    z-index: 799 !important;
 }
 
 .md-header {
-    z-index: 1002 !important;       /* 顶部导航栏 */
+    z-index: 1004 !important; /* 顶部导航栏最高 */
+}
+
+.md-nav__container {
+    z-index: 1003 !important;
+}
+
+.md-nav__title,
+.md-nav__list,
+.md-nav__item {
+    position: relative !important;
+    z-index: 1004 !important;
+}
+
+/* 移动端特定修复 */
+@media (max-width: 768px) {
+    .md-nav {
+        z-index: 1003 !important;
+    }
+    
+    .md-nav__overlay {
+        z-index: 1002 !important;
+    }
+    
+    /* 在移动端降低图层控制的层级，确保导航菜单可操作 */
+    .layer-control {
+        z-index: 700 !important;
+    }
+    
+    .show-layers-btn {
+        z-index: 701 !important;
+    }
 }
