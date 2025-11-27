@@ -190,6 +190,7 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    z-index: 1 !important; 
 }
 
 .map-container {
@@ -443,6 +444,7 @@
 }
 
 /* Layers控制面板关闭按钮相关样式 */
+/* 图层控制基础样式 */
 .layer-control {
     position: absolute;
     top: 60px;
@@ -454,6 +456,7 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, opacity 0.3s ease;
     display: block; /* 明确设置默认显示 */
+    z-index: 1000 !important;
 }
 
 .layer-control.hidden {
@@ -512,6 +515,7 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
     display: none; /* 默认隐藏 */
+    z-index: 1001 !important;
 }
 
 .show-layers-btn.visible {
@@ -536,72 +540,8 @@
     margin-right: 8px;
 }
 
-@media (max-width: 768px) {
-  .md-header__inner {
-    position: relative;
-    min-height: 48px;
-  }
-  
-  .md-header__ellipsis::after {
-    font-size: 0.9rem !important;
-    max-width: 120px !important; /* 进一步缩小标题 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* 确保搜索和主题按钮有空间 */
-  .md-header__option {
-    flex-shrink: 0;
-  }
-}
-
-/* === 修复移动端导航菜单被遮挡问题 === */
-/* 修复移动端导航菜单被遮挡的问题 */
-.md-nav {
-    z-index: 1003 !important; /* 提高导航菜单的层级 */
-}
-
-.md-nav__overlay {
-    z-index: 1002 !important; /* 提高导航遮罩的层级 */
-}
-
-/* 图层控制面板层级调整 */
-.layer-control {
-    z-index: 800 !important; /* 保持在地图之上，但在导航之下 */
-}
-
-.show-layers-btn {
-    z-index: 801 !important; /* 显示按钮在图层控制之上 */
-}
-
-/* 确保地图相关元素在正确层级 */
-#mapwarper-style-map, .map-container {
-    z-index: 1 !important;
-}
-
-.map-toolbar {
-    z-index: 799 !important;
-}
-
-.md-header {
-    z-index: 1004 !important; /* 顶部导航栏最高 */
-}
-
-.md-nav__container {
-    z-index: 1003 !important;
-}
-
-.md-nav__title,
-.md-nav__list,
-.md-nav__item {
+/* 确保地图容器是相对定位 */
+.mapwarper-style-container {
     position: relative !important;
-    z-index: 1004 !important;
-}
-
-@media (max-width: 768px) {
-    .layer-control,
-    .show-layers-btn {
-        display: none !important;
-    }
+    z-index: 1 !important;
 }

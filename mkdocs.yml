@@ -48,9 +48,13 @@ plugins:
   - blog
 
 nav:
-  - Map: index.md   
+  - Home: index.md   
   - About: 
       - Selected Publications: about/testing.md
+  - Publications: publications.md  # 稍后创建这个文件
+  - Timeline: timeline.md          # 稍后创建这个文件
+  - Database: database.md          # 稍后创建这个文件
+
 
 #  - Blog:
 #    - All Posts: 

@@ -94,11 +94,10 @@ main .md-content {
     </div>
 </div>
 
-<!-- 添加显示按钮 -->
+ <!-- 添加显示按钮 -->
 <button class="show-layers-btn" id="showLayersBtn" onclick="toggleLayerControl()" title="Show layers">
     <span>🗂️Layers</span>
 </button>
-
 
 
 <style>
