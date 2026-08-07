@@ -23,6 +23,49 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('✅ Manifest已设置');
 });
+
+function garyFitMapContainer() {
+    const container = document.querySelector('.mapwarper-style-container');
+    if (!container) return;
+    // 直接量測容器在整個文件中的絕對頂部位置（不受目前捲動位置影響），
+    // 用「視窗高度 - 這個絕對位置」算出剩餘可用高度。
+    // 不用列舉上面疊了 header / tabs / H1 標題 / 內距...等任何東西，
+    // 量到的永遠是準確值。
+    const top = container.getBoundingClientRect().top + window.scrollY;
+    const remaining = window.innerHeight - top;
+    container.style.setProperty('--gary-map-h', remaining + 'px');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    garyFitMapContainer();
+
+    const header = document.querySelector('.md-header');
+    const tabs = document.querySelector('.md-tabs');
+    const ro = new ResizeObserver(garyFitMapContainer);
+    if (header) ro.observe(header);
+    if (tabs) ro.observe(tabs);
+
+    // 訪客計數器圖片是延遲載入的，補測一次避免載入完成後高度算錯
+    setTimeout(garyFitMapContainer, 500);
+});
+
+window.addEventListener('resize', garyFitMapContainer);
+window.addEventListener('load', garyFitMapContainer);
+
+function garySetTitle() {
+    document.querySelectorAll('.md-header__topic').forEach(function (topic) {
+        const label = topic.querySelector('.md-ellipsis') || topic;
+        label.textContent = 'Historical Hong Kong through a Maritime Lens';
+    });
+}
+document.addEventListener('DOMContentLoaded', garySetTitle);
+
+document.addEventListener('DOMContentLoaded', function () {
+    const overlay = document.getElementById('vr360-overlay');
+    if (overlay && !overlay.classList.contains('active')) {
+        document.body.classList.remove('vr360-open');
+    }
+});
 </script>
 
 
@@ -42,15 +85,38 @@ main .md-content {
     margin: 0 !important;
 }
 
-.md-sidebar--primary,
-.md-sidebar--secondary {
-    display: none !important;
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary,
+  .md-sidebar--secondary {
+      display: none !important;
+  }
 }
 
 .mapwarper-style-container {
-    height: 100vh !important;
+    height: var(--gary-map-h, calc(100vh - 6rem)) !important;
     margin: 0 !important;
     padding: 0 !important;
+}
+
+.person-marker-inner {
+    width: 32px;
+    height: 32px;
+    background: #3F07E8;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    border: 2px solid white;
+}
+.person-marker-inner svg {
+    transform: rotate(-45deg);
+}
+
+body.vr360-open .md-header,
+body.vr360-open .md-tabs {
+    display: none !important;
 }
 </style>
 
@@ -94,6 +160,11 @@ main .md-content {
     </div>
 </div>
 
+<div id="vr360-overlay" class="vr360-overlay">
+    <button class="vr360-close" onclick="closeVR360()">×</button>
+    <iframe id="vr360-frame" src="" title="VR360 Lazaretto"></iframe>
+</div>
+
  <!-- 添加显示按钮 -->
 <button class="show-layers-btn" id="showLayersBtn" onclick="toggleLayerControl()" title="Show layers">
     <span>🗂️Layers</span>
@@ -101,17 +172,6 @@ main .md-content {
 
 
 <style>
-/* Map Warper 風格容器 */
-.mapwarper-style-container {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 120px);
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
 /* 工具欄 */
 .map-toolbar {
     display: flex;
@@ -265,6 +325,20 @@ function createColoredDot(color, size = 20) {
     });
 }
 
+function createPersonIcon() {
+    return L.divIcon({
+        className: 'person-marker',
+        html: `<div class="person-marker-inner">
+                 <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                   <circle cx="12" cy="6" r="4"/>
+                   <path d="M12 12c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/>
+                 </svg>
+               </div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 32]
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化地圖
     map = L.map('mapwarper-style-map').setView([22.3193, 114.1694], 11);
@@ -295,6 +369,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     marker1.bindPopup(` 
         <h3><strong>昂船洲 Stonecutters Island</strong></h3>
+        <button onclick="openModelViewer()" style="margin-top:10px; padding:8px 16px; border:1px solid #ccc; border-radius:6px; background:white; cursor:pointer;">
+    🔍 查看 3D 模型
+</button>
         <p>昂船洲，坐落於香港維多利亞港西側，原為九龍半島西面的獨立島嶼，現屬深水埗區，經填海工程後與九龍半島相連。考諸史料，昂船洲自明清以來便已載入方誌，並非無名之島。</p>
         
         <p>因島嶼原始地形似翻轉的船舶，中文得名「昂（仰）船洲」。明萬曆年間《粵大記》便已以「仰船洲」著錄該島；清嘉慶的《新安縣誌》亦延續此名，明確其為新安縣（今香港及深圳部分區域）管轄下的海上島嶼。鴉片戰爭前，英國人在地圖上採用音譯作“Wong Chun Chow”。由於島上四處亦均見石礦場，採石業發展興旺，後來港英官方便將其稱為“Stonecutters Island” （石匠島），中文則沿用昂船洲一稱。 </p>
@@ -308,6 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <source src="images/20201027_114909.mp4" type="video/mp4">
     </video>
 </div>
+
     `);
 
     var marker2 = L.marker([22.284480, 114.113406], {
@@ -378,10 +456,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <p>1841 年前，馬灣與汲水門已具軍事與交通價值。明萬曆年間，馬灣隸屬南頭寨參將管轄，設哨船巡守；清初復界後增設急水門汛，強化海防。晚清時，汲水門駐有大鵬協營把總一員及士兵三十五名，軍事地位顯要。考古發現顯示，馬灣東灣仔村存在文化層，涵蓋新石器時代中期至隋唐層序，出土二十座墓葬、先民遺骸及文化遺物，「馬灣人」遺存為研究香港史前文化與種族源流提供了重要實證。</p>
 
-        <p>英國占領香港後，馬灣汛營仍延續至晚清，光緒年間於島上設九龍關汲水門分關，負責檢查往來船隻，關址位於今馬灣鄉事委員會會址，當年「借地七英尺築路」的碑石為其遺證。隨着《展拓香港界址專條》簽訂後，英國取得含馬灣的九龍北部土地，中英邊界北移至深圳河，地處邊界以南的九龍關遂失去功能並關閉。馬灣原本為漁村，馬灣舊村有超過二百年歷。1960-70 年代為馬灣村的漁業繁盛期，居民以耕作、捕魚及曬蝦膏為生。隨着1997 年青馬大橋落成，馬灣迎來發展的新一頁，高檔住宅、主題公園及博覽館在島上相繼開放，成為馬灣轉型的節點。如今的馬灣與汲水門仍兼具交通運輸、歷史遺跡及現代文旅功能，見證了珠江口東側的發展。</p>
+        <p>英國占領香港後，馬灣汛營仍延續至晚清，光緒年間於島上設九龍關汲水門分關，負責檢查往來船隻，關址位於今馬灣鄉事委員會會址，當年「借地七英尺築路」的碑石為其遺證。隨着《展拓香港界址專條》簽訂後，英國取得含馬灣的九龍北部土地，中英邊界北移至深圳河，地處邊界以南的九龍關遂失去功能並關閉。馬灣原本為漁村，馬灣舊村有超過二百年歷。1960-70 年代為馬灣村的漁業繁盛期，居民以耕作、捕魚及曬蝦膏為生。隨着1997 年青馬大橋落成，馬灣迎來發展的新一頁，高檔住宅、主題公園及博覽館在島上相繼開放，成為馬灣轉型的節點。如今的馬灣與汲水門仍身兼多職，見證着珠江口東側的發展。</p>
     `);
 
+var vrMarker = L.marker([22.289572, 114.135133], {
+    icon: createPersonIcon()
+}).addTo(map);
 
+vrMarker.on('click', function () {
+    document.getElementById('vr360-frame').src = 'vr/lazaretto_vr360_demo.html';
+    document.getElementById('vr360-overlay').classList.add('active');
+    document.body.classList.add('vr360-open');
+});;
 
     console.log('🗺️ Map Warper 風格地圖查看器已加載');
 });
@@ -422,4 +508,16 @@ function changeOpacity(value) {
     historicalLayer.setOpacity(value / 100);
     document.getElementById('opacity-value').textContent = value + '%';
 }
+
+function closeVR360() {
+    document.getElementById('vr360-overlay').classList.remove('active');
+    document.getElementById('vr360-frame').src = '';
+    document.body.classList.remove('vr360-open');
+}
+function openModelViewer() {
+    document.getElementById('vr360-frame').src = 'vr/lazaretto_model_viewer.html';
+    document.getElementById('vr360-overlay').classList.add('active');
+    document.body.classList.add('vr360-open');
+}
+
 </script>
