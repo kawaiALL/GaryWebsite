@@ -34,15 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // === 條件性顯示導覽欄 ===
     const showSidebarPages = ['/about/', '/about/about/', '/about/testing/'];
     const currentPath = window.location.pathname;
-    const shouldShowSidebar = showSidebarPages.some(path => currentPath.includes(path));
-    
+     const shouldShowSidebar = showSidebarPages.some(path => currentPath.includes(path));
+
     if (shouldShowSidebar) {
         document.documentElement.classList.add('show-sidebar');
         console.log('✅ 導覽欄已顯示');
-    } else {
+     } else {
         document.documentElement.classList.remove('show-sidebar');
         console.log('🚫 導覽欄已隱藏');
-    }
+     }
 
 
 

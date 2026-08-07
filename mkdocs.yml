@@ -1,5 +1,5 @@
-site_name: Historical Hong Kong:Maritime Lens
-site_url: https://mydomain.org/mysite
+site_name: Historical Hong Kong through a Maritime Lens
+site_url: https://kawaiall.github.io/GaryWebsite/
 theme:
   name: material 
   logo: images/favicon.png
@@ -33,20 +33,23 @@ theme:
     - announce.dismiss
     - content.code.annotate 
     - header.autohide
- 
-  
+    - navigation.path
+
 
 extra_javascript:
   - js/custom.js
   - https://unpkg.com/leaflet@1.9.4/dist/leaflet.js
+  #  - assets/js/banner-effect.js
+
 extra_css:
   - css/custom.css
   - https://unpkg.com/leaflet@1.9.4/dist/leaflet.css
+#  - assets/css/banner-effect.css
 
 plugins:
   - search
-  - blog
 
+ 
 nav:
   - Home: index.md   
   - About: 
@@ -54,8 +57,8 @@ nav:
   - Publications: publications.md  # 稍后创建这个文件
   - Timeline: timeline.md          # 稍后创建这个文件
   - Database: database.md          # 稍后创建这个文件
-
-
-#  - Blog:
-#    - All Posts: 
-#        - Hello World: blog/posts/Hello-World.md
+  - Blog:
+      - Overview: blog/index.md
+      - Posts:
+          - "Post 1": blog/posts/Hello-World.md
+          
