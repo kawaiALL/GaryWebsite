@@ -22,24 +22,24 @@
 
 /* 頂部導航欄 - 透明毛玻璃效果 */
 .md-header {
-    background-color: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    /* backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;*/
     border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
     transition: all 0.3s ease !important;
 }
 
 /* 頁面滾動時加深效果 */
 .md-header[data-md-state="shadow"] {
-    background-color: rgba(255, 255, 255, 0.95) !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
     border-bottom-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* 標籤欄 - 同樣的毛玻璃效果 */
 .md-tabs {
-    background-color: rgba(255, 255, 255, 0.7) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    /* backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;*/
     border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
@@ -96,7 +96,7 @@
 [data-md-color-scheme="slate"] {
     .md-header {
         background-color: rgba(0, 0, 0, 0.8) !important;
-        backdrop-filter: blur(15px) !important;
+        /* backdrop-filter: blur(15px) !important;*/
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
 
@@ -106,7 +106,7 @@
 
     .md-tabs {
         background-color: rgba(0, 0, 0, 0.7) !important;
-        backdrop-filter: blur(15px) !important;
+        /* backdrop-filter: blur(15px) !important;*/
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
 
@@ -495,4 +495,42 @@
     background: rgba(255,255,255,0.9);
     font-size: 20px;
     cursor: pointer;
+}
+
+/* 首頁背景：讓半透明的 header/tabs 玻璃列透出一點層次，
+   不是純白。純裝飾用，不影響地圖版面或捲動邏輯。 */
+body {
+    background: linear-gradient(
+        160deg,
+        #f4ede1 0%,
+        #e8d9c3 25%,
+        #cfc2ad 55%,
+        #8a9a94 80%,
+        #4f6259 100%
+    );
+    background-attachment: fixed;
+}
+
+/*body {
+    background-image: url('images/hero-victoria-harbour.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(50px);
+    z-index: -1;
+}*/
+.md-main {
+    background: transparent !important;
+}
+
+body[data-md-page="index"] .md-content__inner h1:first-child,
+.md-content__inner > h1:first-of-type {
+    display: none;
 }
