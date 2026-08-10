@@ -1,0 +1,104 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+
+  <section class="gary-hero">
+    <div class="gary-hero__image"></div>
+    <div class="gary-hero__scrim"></div>
+    <div class="gary-hero__content">
+      <h1>Publications</h1>
+      <p>British Colonial Rule over Littoral Space and Watercraft in Hong Kong, 1841–1898</p>
+    </div>
+    <div class="gary-hero__fade"></div>
+  </section>
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <style>
+    /* ==========================================================
+       Publications 頁面專屬的 hero 視差區塊
+       只在這個頁面生效，不影響首頁地圖或其他頁面。
+       Header/Tabs 維持網站原本的白色毛玻璃樣式，不做透明切換。
+       ========================================================== */
+
+    .gary-hero {
+      position: relative;
+      height: 100vh;
+      min-height: 32rem;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .gary-hero__image {
+      position: absolute;
+      inset: 0;
+      background-image: url('../images/hero-victoria-harbour.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      /* 視差效果：背景相對頁面捲動速度較慢。
+         iOS Safari 不支援 fixed，會自動退化成一般捲動，不會壞掉。 */
+      background-attachment: fixed;
+    }
+
+    /* 深色遮罩，確保文字在任何圖片內容上都清楚可讀 */
+    .gary-hero__scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 12, 15, 0.25) 0%,
+        rgba(10, 12, 15, 0.15) 45%,
+        rgba(10, 12, 15, 0.55) 100%
+      );
+    }
+
+    .gary-hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 0 1.6rem;
+      color: #fff;
+      text-align: center;
+    }
+
+    .gary-hero__content h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .gary-hero__content p {
+      font-size: 1.05rem;
+      opacity: 0.92;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    /* 底部漸層，往下捲動時圖片「淡出」到網站背景色 */
+    .gary-hero__fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 8rem;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        var(--md-default-bg-color) 100%
+      );
+    }
+
+    @media screen and (max-width: 44.9375em) {
+      .gary-hero {
+        height: 70vh;
+      }
+      .gary-hero__content h1 {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+{% endblock %}

@@ -105,8 +105,8 @@
 
   <div id="hud">
     <div class="title">
-      <h1>維多利亞港夜景 · VR360</h1>
-      <p>拖曳環視全景 · 點擊光點查看 3D 模型</p>
+      <h1>Victoria Harbour Night View · VR360</h1>
+      <p>Drag to view the panoramic view; click on the light spot to view the 3D model.</p>
     </div>
     <div class="badge">DEMO</div>
   </div>
@@ -115,7 +115,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
       <path d="M9 11l3-3 3 3M9 13l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    拖曳畫面環視 · 滾輪縮放
+    Drag to view the panoramic view; scroll to zoom.
   </div>
 
   <div id="modal">
@@ -123,12 +123,12 @@
       <div id="modal-head">
         <div>
           <h2 id="modal-title">—</h2>
-          <span id="modal-sub">此為模型載入位置示意（placeholder cube）</span>
+          <span id="modal-sub">（placeholder cube）</span>
         </div>
         <button id="modal-close">✕</button>
       </div>
       <div id="model-viewer">
-        <div id="model-note">目前顯示佔位方塊。把對應的 <code>.glb</code> 檔放進同一資料夾，並修改程式中的 GLTFLoader 路徑，即可換成真正的 3D 模型。</div>
+        <div id="model-note">Currently, a placeholder block is displayed. To replace it with a real 3D model, place the corresponding `<code>.glb</code>` file in the same folder and modify the GLTFLoader path in the program.</div>
       </div>
     </div>
   </div>
@@ -376,7 +376,7 @@ const HOTSPOTS = [
     if (h.id === 'lazaretto') {
       // Real model: Draco-compressed GLB, embedded as base64 (~4.8MB).
       const note = document.getElementById('model-note');
-      if (note) note.textContent = '載入中… (真實 3D 模型，約 4.8MB, 已 Draco 壓縮)';
+        if (note) note.textContent = 'Loading… (real 3D model,约 4.8MB, compressed with Draco)';
 
       const dracoLoader = new THREE.DRACOLoader();
       dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
@@ -404,14 +404,14 @@ const HOTSPOTS = [
 
           mScene.add(model);
           spinTarget = model;
-          if (note) note.textContent = 'Lazaretto — 由 Meshy AI 生成、Blender 整理、壓縮至 ~4.8MB 後嵌入此頁面。';
+          if (note) note.textContent = 'Lazaretto';
         }, function (err) {
           console.error('GLTF parse error', err);
-          if (note) note.textContent = '模型載入失敗，請檢查 console。';
+          if (note) note.textContent = 'Failed to load model, please check the console.';
         });
       } catch (e) {
         console.error(e);
-        if (note) note.textContent = '模型解碼失敗，請檢查 console。';
+        if (note) note.textContent = 'Failed to decode model, please check the console.';
       }
     } else {
       // No real model yet for this hotspot: keep the placeholder cube.

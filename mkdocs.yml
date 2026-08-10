@@ -2,6 +2,7 @@ site_name: Historical Hong Kong through a Maritime Lens
 site_url: https://kawaiall.github.io/GaryWebsite/
 theme:
   name: material 
+  custom_dir: docs/overrides
   logo: images/favicon.png
   favicon: images/favicon.png
   palette: 
