@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material 风格 Banner + 渐变效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        /* === 1. Banner 背景层 === */
+        .site-header {
+            position: relative;
+            height: 400px; /* Banner 高度 */
+            overflow: hidden;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom right, #3f51b5, #2196f3); /* 渐变背景 */
+            /* 或者使用图片： */
+            /* background-image: url('https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'); */
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+        
+        /* === 2. 渐变遮罩层 === */
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.2) 0%,
+                rgba(0, 0, 0, 0.4) 50%,
+                rgba(0, 0, 0, 0.8) 100%
+            );
+            z-index: 2;
+        }
+        
+        /* === 3. 固定导航栏 === */
+        .fixed-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            border-bottom: 1px solid transparent;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 滚动后的导航栏状态 */
+        .fixed-nav.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            height: 64px; /* 滚动后略微增高 */
+        }
+        
+        /* Logo/标题样式 */
+        .nav-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .fixed-nav.scrolled .nav-title {
+            color: #2c3e50;
+        }
+        
+        /* 导航链接 */
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            margin-left: 48px;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .fixed-nav.scrolled .nav-link {
+            color: #5d6d7e;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+        }
+        
+        .fixed-nav.scrolled .nav-link:hover {
+            color: #2196f3;
+        }
+        
+        /* 下划线效果 */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+        
+        .fixed-nav.scrolled .nav-link::after {
+            background: #2196f3;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* === 4. Banner 内容 === */
+        .banner-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            text-align: center;
+            padding-top: 150px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .banner-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .banner-subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* === 5. 主内容区域 === */
+        .main-content {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 24px;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        /* === 响应式设计 === */
+        @media (max-width: 768px) {
+            .site-header {
+                height: 300px;
+            }
+            
+            .banner-content {
+                padding-top: 100px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            .banner-title {
+                font-size: 36px;
+            }
+            
+            .banner-subtitle {
+                font-size: 18px;
+            }
+            
+            .nav-links {
+                gap: 16px;
+                margin-left: 24px;
+            }
+        }
+        
+        /* 深色模式 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #121212;
+                color: #e0e0e0;
+            }
+            
+            .fixed-nav.scrolled {
+                background: rgba(30, 30, 30, 0.92);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .fixed-nav.scrolled .nav-title {
+                color: #ffffff;
+            }
+            
+            .fixed-nav.scrolled .nav-link {
+                color: #b0b0b0;
+            }
+            
+            .content-section {
+                background: #1e1e1e;
+                color: #e0e0e0;
+            }
+            
+            .section-title {
+                color: #ffffff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 1. Banner 区域 -->
+    <header class="site-header">
+        <!-- 背景层 -->
+        <div class="header-bg"></div>
+        
+        <!-- 渐变遮罩 -->
+        <div class="header-overlay"></div>
+        
+        <!-- 固定导航栏 -->
+        <nav class="fixed-nav" id="mainNav">
+            <a href="#" class="nav-title">Historical Hong Kong</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#map" class="nav-link">Interactive Map</a>
+                <a href="#timeline" class="nav-link">Timeline</a>
+                <a href="#database" class="nav-link">Database</a>
+            </div>
+        </nav>
+        
+        <!-- Banner 内容 -->
+        <div class="banner-content">
+            <h1 class="banner-title">Historical Hong Kong: Maritime Lens</h1>
+            <p class="banner-subtitle">
+                Exploring Hong Kong's rich maritime history through interactive maps, 
+                archival documents, and digital storytelling
+            </p>
+        </div>
+    </header>
+    
+    <!-- 2. 主内容区域 -->
+    <main class="main-content">
+        <section class="content-section" id="home">
+            <h2 class="section-title">Welcome to Historical Hong Kong</h2>
+            <p>This project aims to document and visualize Hong Kong's maritime history through an interactive digital platform. By combining historical maps, archival research, and modern web technologies, we create an engaging experience for exploring the city's past.</p>
+            
+            <p>Hong Kong's development has always been intrinsically linked to the sea. From early fishing communities to international trading port, the waters around Hong Kong have witnessed centuries of human activity, cultural exchange, and economic transformation.</p>
+        </section>
+        
+        <section class="content-section" id="about">
+            <h2 class="section-title">About This Project</h2>
+            <p>Using digital humanities methodologies, we georeference historical maps, digitize archival documents, and create interactive visualizations that make Hong Kong's maritime history accessible to researchers, students, and the general public.</p>
+        </section>
+        
+        <!-- 更多内容可以添加... -->
+    </main>
+    
+    <script>
+        // 滚动监听 - 实现渐变效果
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('mainNav');
+            const scrollPosition = window.scrollY;
+            const headerHeight = 400; // Banner 高度
+            
+            // 1. 导航栏渐变效果
+            if (scrollPosition > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            
+            // 2. Banner 遮罩层渐变效果
+            const overlay = document.querySelector('.header-overlay');
+            if (overlay) {
+                // 计算透明度：在滚动到50px时开始渐变
+                let opacity = Math.min(scrollPosition / 100, 0.8);
+                overlay.style.opacity = 1 - (opacity * 0.5);
+            }
+            
+            // 3. 导航栏背景透明度渐变
+            const transparency = Math.min(scrollPosition / headerHeight, 1);
+            if (scrollPosition < headerHeight) {
+                // 在 Banner 区域内滚动时，背景从透明渐变到半透明
+                nav.style.background = `rgba(255, 255, 255, ${transparency * 0.92})`;
+                nav.style.backdropFilter = `blur(${transparency * 20}px)`;
+            }
+        });
+        
+        // 平滑滚动到锚点
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 页面加载后添加一些动态效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 渐入效果
+            const bannerContent = document.querySelector('.banner-content');
+            bannerContent.style.opacity = '0';
+            bannerContent.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                bannerContent.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                bannerContent.style.opacity = '1';
+                bannerContent.style.transform = 'translateY(0)';
+            }, 300);
+        });
+    </script>
+    
+    <!-- 如果你想使用真实的图片作为 Banner -->
+    <script>
+        // 可选：使用 Unsplash 图片作为 Banner 背景
+        // document.querySelector('.header-bg').style.backgroundImage = 
+        //     'url("https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80")';
+    </script>
+</body>
+</html>

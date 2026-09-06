@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* 临时测试样式 */
+        .test-banner {
+            background: red;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 测试脚本是否能执行
+        console.log('测试脚本执行中...');
+        document.body.insertAdjacentHTML('afterbegin', 
+            '<div class="test-banner">🎉 测试成功！脚本可以执行</div>');
+    </script>
+</body>
+</html>
