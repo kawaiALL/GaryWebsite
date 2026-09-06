@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('vr360-open');
     }
 });
+
 </script>
 
 
@@ -144,19 +145,32 @@ body.vr360-open .md-tabs {
         <button class="close-btn" onclick="toggleLayerControl()" title="Hide panel">×</button>
     </div>
     <div class="control-content">
-        <label class="layer-item">
-            <input type="checkbox" id="historical-layer" checked onchange="toggleHistoricalLayer()">
-            <span>Historical Map (1957)</span>
-        </label>
+        <div class="layer-item-group">
+            <label class="layer-item">
+                <input type="checkbox" id="historical-layer" checked onchange="toggleHistoricalLayer()">
+                <span>Historical Map (1957)</span>
+            </label>
+            <div class="inline-opacity" id="opacity-1957" style="display: block;">
+                <input type="range" id="opacity-slider" min="0" max="100" value="100"
+                       oninput="changeOpacity(this.value)">
+                <span id="opacity-value" class="opacity-percent">100%</span>
+            </div>
+        </div>
+        <div class="layer-item-group">
+            <label class="layer-item">
+                <input type="checkbox" id="new-historical-layer" onchange="toggleNewHistoricalLayer()">
+                <span>Historical Map (1909)</span>
+            </label>
+            <div class="inline-opacity" id="opacity-1909" style="display: none;">
+                <input type="range" id="new-opacity-slider" min="0" max="100" value="100"
+                       oninput="changeNewOpacity(this.value)">
+                <span id="new-opacity-value" class="opacity-percent">100%</span>
+            </div>
+        </div>
         <label class="layer-item">
             <input type="checkbox" id="modern-layer" onchange="toggleModernLayer()">
             <span>Modern Map</span>
         </label>
-        <div class="opacity-control">
-            <label>Transparency</label>
-            <input type="range" id="opacity-slider" min="0" max="100" value="100" oninput="changeOpacity(this.value)">
-            <span id="opacity-value">100%</span>
-        </div>
     </div>
 </div>
 
@@ -165,11 +179,41 @@ body.vr360-open .md-tabs {
     <iframe id="vr360-frame" src="" title="VR360 Lazaretto"></iframe>
 </div>
 
+<!-- Lazaretto Gallery Modal -->
+<div id="lazaretto-modal" class="lazaretto-modal" style="display:none;">
+  <div class="lazaretto-modal-content">
+    <button class="lazaretto-close" onclick="closeLazarettoModal()">&times;</button>
+
+    <div class="lazaretto-gallery">
+  <button class="lazaretto-nav lazaretto-prev" onclick="changeLazarettoSlide(-1)">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+</button>
+      <img id="lazaretto-image" src="" alt="">
+      <button class="lazaretto-nav lazaretto-next" onclick="changeLazarettoSlide(1)">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+</button>
+    </div>
+
+    <div class="lazaretto-caption">
+      <h3 id="lazaretto-caption-title"></h3>
+      <p id="lazaretto-caption-text"></p>
+      <p class="lazaretto-source" id="lazaretto-caption-source"></p>
+    </div>
+
+    <div class="lazaretto-dots" id="lazaretto-dots"></div>
+
+   <button id="lazaretto-model-btn" class="lazaretto-model-btn" ...
+  onclick="closeLazarettoModal(); openModelViewer();">
+  View 3D Reconstruction Model →
+</button>
+  </div>
+</div>
+
  <!-- 添加显示按钮 -->
 <button class="show-layers-btn" id="showLayersBtn" onclick="toggleLayerControl()" title="Show layers">
     <span>🗂️Layers</span>
 </button>
-
+<button onclick="playShipRoute()" class="ship-play-btn">▶ Play</button>
 
 <style>
 /* 工具欄 */
@@ -287,11 +331,7 @@ body.vr360-open .md-tabs {
     margin-bottom: 8px;
 }
 
-#opacity-value {
-    font-size: 12px;
-    color: #6c757d;
-    float: right;
-}
+
 
 /* Leaflet 地圖自定義樣式 */
 .leaflet-container {
@@ -311,7 +351,33 @@ body.vr360-open .md-tabs {
 var map;
 var historicalLayer;
 var modernLayer;
+var lazarettoMarker;
+var currentSlide = 0;
+var shipMarker;
+var shipAnimationId;
+var shipRoute;
 
+const lazarettoSlides = [
+  {
+  image: 'images/1874-view-from-the-peak.png', // TODO: 換成實際檔名
+  title: 'A view from the mountaintop, 1874',
+  caption: 'This panoramic photo of Victoria Harbour, taken from Victoria Peak, shows Stonecutters Island in the distance. It is one of the closest known photographic records to the time of this study that definitively captures Stonecutters Island.',
+  source: 'CO 1069/445/10, The National Archives (Kew), 1874'
+},
+  {
+    image: 'images/lazaretto-location-plan.png', // TODO
+    title: 'Location',
+    caption: 'Map of the Stone Cutters Island military and quarantine area from 1883, with Lazaretto marked on the western side of the island.',
+    source: 'CO 129/212, The National Archives (Kew), Nov. 1883'
+  },
+  {
+    image: 'images/lazaretto-floor-plan.png', // TODO
+    title: 'Architectural floor plan',
+    caption: 'Lazaretto architectural drawings from 1883, including Chinese and European ward layouts.',
+    source: 'CO 129/212, The National Archives (Kew), Nov. 1883'
+  }
+  
+];
 function createColoredDot(color, size = 20) {
     return L.divIcon({
         className: 'custom-dot',
@@ -339,7 +405,22 @@ function createPersonIcon() {
     });
 }
 
+function createLazarettoIcon() {
+    return L.divIcon({
+        className: 'lazaretto-marker-icon',
+        html: `<svg width="28" height="28" viewBox="0 0 28 28">
+                 <path d="M14 2C8 2 3.5 6.5 3.5 12.5C3.5 20 14 27 14 27C14 27 24.5 20 24.5 12.5C24.5 6.5 20 2 14 2Z" 
+                       fill="#8a6f4a" stroke="#faf6ed" stroke-width="2"/>
+                 <path d="M14 8V17M9.5 12.5H18.5" stroke="#faf6ed" stroke-width="2" stroke-linecap="round"/>
+               </svg>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 27],
+        popupAnchor: [0, -24]
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    document.body.appendChild(document.getElementById('lazaretto-modal'));
     // 初始化地圖
     map = L.map('mapwarper-style-map').setView([22.3193, 114.1694], 11);
     
@@ -356,6 +437,14 @@ document.addEventListener('DOMContentLoaded', function() {
         minZoom: 10,
         opacity: 1.0
     }).addTo(map);
+
+    // 添加新歷史地圖（19世紀／1930年代，視妳這張圖實際年代而定）
+    newHistoricalLayer = L.tileLayer('https://www.mapwarper.net/maps/tile/111342/{z}/{x}/{y}.png', {
+    attribution: 'Historical Map © Map Warper',
+    maxZoom: 18,
+    minZoom: 10,
+    opacity: 1.0
+});
     
     // 監聽縮放事件更新顯示
     map.on('zoomend', function() {
@@ -369,8 +458,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     marker1.bindPopup(` 
         <h3><strong>昂船洲 Stonecutters Island</strong></h3>
+        
         <button onclick="openModelViewer()" style="margin-top:10px; padding:8px 16px; border:1px solid #ccc; border-radius:6px; background:white; cursor:pointer;">
-    🔍 查看 3D 模型
+    🔍 View the restored 3D model
 </button>
         <p>昂船洲，坐落於香港維多利亞港西側，原為九龍半島西面的獨立島嶼，現屬深水埗區，經填海工程後與九龍半島相連。考諸史料，昂船洲自明清以來便已載入方誌，並非無名之島。</p>
         
@@ -467,11 +557,105 @@ vrMarker.on('click', function () {
     document.getElementById('vr360-frame').src = 'vr/lazaretto_vr360_demo.html';
     document.getElementById('vr360-overlay').classList.add('active');
     document.body.classList.add('vr360-open');
-});;
+});
+const stonecuttersOutline = [
+  [22.325978, 114.137208],
+  [22.321928, 114.132661],
+  [22.320817, 114.129742],
+  [22.318197, 114.131714],
+  [22.319388, 114.133944],
+  [22.319943, 114.137976],
+  [22.317720, 114.139005],
+  [22.316608, 114.140721],
+  [22.315092, 114.142325],
+  [22.320690, 114.146764],
+  [22.321961, 114.147279],
+  [22.323430, 114.145521],
+  [22.321147, 114.144277],
+  [22.321584, 114.141424],
+  [22.323211, 114.139341],
+  [22.324124, 114.138290]
+];
 
+const stonecuttersPolygon = L.polygon(stonecuttersOutline, {
+  color: '#8B6F47',
+  weight: 2,
+  fillColor: '#8B6F47',
+  fillOpacity: 0.15
+}).addTo(map);
+
+stonecuttersPolygon.bindTooltip("Outline of Stonecutters Island, 1883", { sticky: true });
+const lazarettoCoord = [22.321535, 114.134627];
+lazarettoMarker = L.marker(lazarettoCoord, { icon: createLazarettoIcon() }).addTo(map);
+lazarettoMarker.bindPopup(`
+  <div style="text-align:center;">
+    <strong>Lazaretto</strong><br>
+    <span style="font-size:12px;">昂船洲檢疫站</span><br>
+    <button onclick="openLazarettoModal()" style="margin-top:6px;padding:4px 10px;cursor:pointer;">
+      Explore the site →
+    </button>
+  </div>
+`);
+// TODO: 這幾個點是預估的示意路徑，建議之後依史料調整
+shipRoute = [
+  [22.2887, 114.2350],  // 鯉魚門
+  [22.2955, 114.1950],  // 維港東段
+  [22.2920, 114.1700],  // 維港中段（近中環）
+  [22.3050, 114.1550],  // 轉向昂船洲方向
+  [22.320690, 114.146764], // 靠近昂船洲東側
+  [22.322783, 114.134278]  // 終點：Lazaretto附近
+];
+
+const shipRoutePath = L.polyline(shipRoute, {
+  color: '#c1440e',
+  weight: 3,
+  dashArray: '8, 6',
+  opacity: 0.85
+}).addTo(map);
+
+shipMarker = L.marker(shipRoute[0], { icon: createShipIcon() }).addTo(map);
+shipMarker.bindTooltip("Xiagou", {
+    direction: 'top',
+    offset: [0, -18]
+});
     console.log('🗺️ Map Warper 風格地圖查看器已加載');
 });
+function renderLazarettoSlide(index) {
+  const slide = lazarettoSlides[index];
+  document.getElementById('lazaretto-image').src = slide.image;
+  document.getElementById('lazaretto-image').alt = slide.title;
+  document.getElementById('lazaretto-caption-title').textContent = slide.title;
+  document.getElementById('lazaretto-caption-text').textContent = slide.caption;
+  document.getElementById('lazaretto-caption-source').textContent = slide.source;
 
+  const dotsContainer = document.getElementById('lazaretto-dots');
+  dotsContainer.innerHTML = '';
+  lazarettoSlides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'lazaretto-dot' + (i === index ? ' active' : '');
+    dot.onclick = () => { currentSlide = i; renderLazarettoSlide(currentSlide); };
+    dotsContainer.appendChild(dot);
+  });
+
+  const modelBtn = document.getElementById('lazaretto-model-btn');
+  modelBtn.style.display = (index === lazarettoSlides.length - 1) ? 'block' : 'none';
+}
+
+function openLazarettoModal() {
+  currentSlide = 0;
+  renderLazarettoSlide(currentSlide);
+  document.getElementById('lazaretto-modal').style.display = 'flex';
+  lazarettoMarker.closePopup();
+}
+
+function closeLazarettoModal() {
+  document.getElementById('lazaretto-modal').style.display = 'none';
+}
+
+function changeLazarettoSlide(direction) {
+  currentSlide = (currentSlide + direction + lazarettoSlides.length) % lazarettoSlides.length;
+  renderLazarettoSlide(currentSlide);
+}
 // 工具欄功能
 function zoomIn() {
     map.zoomIn();
@@ -515,9 +699,77 @@ function closeVR360() {
     document.body.classList.remove('vr360-open');
 }
 function openModelViewer() {
-    document.getElementById('vr360-frame').src = 'vr/lazaretto_model_viewer.html';
+    document.getElementById('vr360-frame').src = 'vr/lazaretto_model_viewer_with_controls.html';
     document.getElementById('vr360-overlay').classList.add('active');
     document.body.classList.add('vr360-open');
 }
+function createShipIcon() {
+    return L.divIcon({
+        className: 'ship-marker-icon',
+        html: `<svg width="32" height="28" viewBox="0 0 32 28">
+                 <!-- 船身 -->
+                 <path d="M2 20 Q4 24 8 24 L24 24 Q28 24 30 20 L28 18 L4 18 Z" 
+                       fill="none" stroke="#c1440e" stroke-width="1.8" stroke-linejoin="round"/>
+                 <!-- 主桅 -->
+                 <line x1="13" y1="18" x2="13" y2="2" stroke="#c1440e" stroke-width="1.6"/>
+                 <!-- 主帆繩索（放射狀，呼應草圖) -->
+                 <line x1="13" y1="3" x2="6" y2="17" stroke="#c1440e" stroke-width="1" opacity="0.75"/>
+                 <line x1="13" y1="3" x2="9" y2="17" stroke="#c1440e" stroke-width="1" opacity="0.75"/>
+                 <line x1="13" y1="3" x2="17" y2="17" stroke="#c1440e" stroke-width="1" opacity="0.75"/>
+                 <!-- 船篷 -->
+                 <path d="M9 17 Q13 13 20 15 L20 17 Q13 15 9 17Z" 
+                       fill="#8a6f4a" opacity="0.4" stroke="#8a6f4a" stroke-width="1.1"/>
+                 <!-- 尾桅 -->
+                 <line x1="24" y1="18" x2="24" y2="7" stroke="#c1440e" stroke-width="1.4"/>
+                 <line x1="24" y1="8" x2="21" y2="17" stroke="#c1440e" stroke-width="0.9" opacity="0.75"/>
+               </svg>`,
+        iconSize: [32, 28],
+        iconAnchor: [16, 20]
+    });
+}
+function getRouteLength(route) {
+    let total = 0;
+    for (let i = 0; i < route.length - 1; i++) {
+        total += map.distance(route[i], route[i + 1]);
+    }
+    return total;
+}
 
+function getPointAtDistance(route, targetDist) {
+    let traveled = 0;
+    for (let i = 0; i < route.length - 1; i++) {
+        const segStart = L.latLng(route[i]);
+        const segEnd = L.latLng(route[i + 1]);
+        const segLength = map.distance(segStart, segEnd);
+        if (traveled + segLength >= targetDist) {
+            const ratio = (targetDist - traveled) / segLength;
+            const lat = segStart.lat + (segEnd.lat - segStart.lat) * ratio;
+            const lng = segStart.lng + (segEnd.lng - segStart.lng) * ratio;
+            return [lat, lng];
+        }
+        traveled += segLength;
+    }
+    return route[route.length - 1];
+}
+
+function playShipRoute() {
+    if (shipAnimationId) cancelAnimationFrame(shipAnimationId);
+
+    const totalLength = getRouteLength(shipRoute);
+    const durationMs = 8000; // 整趟動畫8秒，可調整
+    const startTime = performance.now();
+
+    function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / durationMs, 1);
+        const dist = totalLength * progress;
+        const pos = getPointAtDistance(shipRoute, dist);
+        shipMarker.setLatLng(pos);
+
+        if (progress < 1) {
+            shipAnimationId = requestAnimationFrame(step);
+        }
+    }
+    shipAnimationId = requestAnimationFrame(step);
+}
 </script>
