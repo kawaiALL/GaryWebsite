@@ -170,16 +170,36 @@ function toggleHistoricalLayer() {
     }
 }
 
-function toggleModernLayer() {
-    var checkbox = document.getElementById('modern-layer');
+function toggleHistoricalLayer() {
+    var checkbox = document.getElementById('historical-layer');
+    var opacityDiv = document.getElementById('opacity-1957');
     if (checkbox.checked) {
-        map.addLayer(modernLayer);
+        map.addLayer(historicalLayer);
+        opacityDiv.style.display = 'block';
     } else {
-        map.removeLayer(modernLayer);
+        map.removeLayer(historicalLayer);
+        opacityDiv.style.display = 'none';
     }
 }
 
 function changeOpacity(value) {
     historicalLayer.setOpacity(value / 100);
     document.getElementById('opacity-value').textContent = value + '%';
+}
+
+function toggleNewHistoricalLayer() {
+    var checkbox = document.getElementById('new-historical-layer');
+    var opacityDiv = document.getElementById('opacity-1909');
+    if (checkbox.checked) {
+        map.addLayer(newHistoricalLayer);
+        opacityDiv.style.display = 'block';
+    } else {
+        map.removeLayer(newHistoricalLayer);
+        opacityDiv.style.display = 'none';
+    }
+}
+
+function changeNewOpacity(value) {
+    newHistoricalLayer.setOpacity(value / 100);
+    document.getElementById('new-opacity-value').textContent = value + '%';
 }
